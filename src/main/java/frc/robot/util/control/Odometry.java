@@ -21,6 +21,12 @@ public class Odometry {
         this.y = y;
         this.theta = theta;
     }
+    
+    public void updateOdometry() {
+        x += RobotMap.leftDriveEncoder.getRate() * RobotConstants.kDT * Math.cos(theta);
+        y += RobotMap.leftDriveEncoder.getRate() * RobotConstants.kDT * Math.sin(theta);
+        theta += RobotMap.gyro.getAngle();
+    }
 
     public double getX() {
         return x;
@@ -31,7 +37,7 @@ public class Odometry {
     }
 
     public double getHeading() {
-        return theta % (Math.PI * 2);
+        return theta;
     }
 
     public String toString() {
