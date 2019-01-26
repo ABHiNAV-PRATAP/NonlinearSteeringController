@@ -46,6 +46,7 @@ public class DrivePath extends Command {
     double l = (-1 * (w * RobotConstants.kWheelBase) + (2 * v)) / 2;
     double r = ((w * RobotConstants.kWheelBase) + (2 * v)) / 2;
     Robot.drivetrain.drive(l, r);
+    ramseteFollower.updateGoal();
   }
 
   // Make this return true when this Command no longer needs to run execute()
