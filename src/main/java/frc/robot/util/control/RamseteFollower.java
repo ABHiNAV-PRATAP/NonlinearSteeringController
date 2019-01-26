@@ -70,6 +70,7 @@ public class RamseteFollower {
         v_d = getDesiredLinear();
         w_d = getDesiredAngular();
         k = calculateConstant();
+        currentSegment++;
     }
     
     public double sinc(double theta) {
