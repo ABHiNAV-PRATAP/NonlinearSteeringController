@@ -27,7 +27,7 @@ public class RamseteFollower {
 
     private int currentSegment;
     private Trajectory traj;
-    private Odometry o;
+    public Odometry o;
 
     public RamseteFollower(Trajectory traj, Odometry o) {
         this.traj = traj;
