@@ -16,4 +16,7 @@ public class RobotConstants {
         kBackLeftVictor = 0,
         kFrontRightVictor = 0,
         kBackRightVictor = 0;
+    
+    public static final double
+        kDT = 0.02; // 20ms = 0.02s
 }
