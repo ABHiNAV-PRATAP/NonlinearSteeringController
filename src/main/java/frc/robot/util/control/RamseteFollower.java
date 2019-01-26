@@ -60,7 +60,7 @@ public class RamseteFollower {
     }
     
     public double calculateConstant() {
-        return 2*z*Math.sqrt(Math.pow(getDesiredAngular(), 2)+b*Math.pow(getDesiredLinear(), 2));
+        return 2 * z * Math.sqrt(Math.pow(w_d, 2) + b * Math.pow(v_d, 2));
     }
     
     public void updateGoal() {
@@ -72,13 +72,18 @@ public class RamseteFollower {
         k = calculateConstant();
     }
     
+    public double sinc(double theta) {
+        if(Math.abs(theta) < 0.001) return 1; // Limit to infinite of sin(x)/x
+        else return (Math.sin(theta) / theta);
+    }
+    
     public double calculateLinearVelocity() {
-        double v = v_d * Math.cos(theta_d - o.getHeading()) + k*(Math.cos(o.getHeading()) * (x_d-o.getX()) + Math.sin(o.getHeading()) * (y_d-o.getY()));
+        double v = v_d * Math.cos(theta_d - o.getHeading()) + k * (Math.cos(o.getHeading()) * (x_d - o.getX()) + Math.sin(o.getHeading()) * (y_d - o.getY()));
         return v;
     }
     
     public double calculateAngularVelocity() {
-        double w = w_d + b * v_d * sinc(theta_d - o.getHeading()) * ((y_d-o.getY())*cos(o.getHeading())-(x_d-o.getX())*sin(o.getHeading())) + k * (theta_d-o.getHeading());
+        double w = w_d + b * v_d * sinc(theta_d - o.getHeading()) * ((y_d - o.getY()) * cos(o.getHeading()) - (x_d - o.getX()) * sin(o.getHeading())) + k * (theta_d - o.getHeading());
         return w;
-    }        
+    }
 }
