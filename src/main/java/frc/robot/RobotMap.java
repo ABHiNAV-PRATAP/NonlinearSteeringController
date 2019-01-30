@@ -10,6 +10,7 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.I2C.Port;
 
 /**
@@ -20,10 +21,14 @@ import edu.wpi.first.wpilibj.I2C.Port;
  */
 public class RobotMap {
   public static WPI_VictorSPX
-    frontLeftVictor = new WPI_VictorSPX(RobotConstants.kFrontLeftVictor),
-    backLeftVictor = new WPI_VictorSPX(RobotConstants.kBackLeftVictor),
-    frontRightVictor = new WPI_VictorSPX(RobotConstants.kFrontRightVictor),
-    backRightVictor = new WPI_VictorSPX(RobotConstants.kFrontRightVictor);
+    frontLeftVictor = new WPI_VictorSPX(Constants.kFrontLeftVictor),
+    backLeftVictor = new WPI_VictorSPX(Constants.kBackLeftVictor),
+    frontRightVictor = new WPI_VictorSPX(Constants.kFrontRightVictor),
+    backRightVictor = new WPI_VictorSPX(Constants.kFrontRightVictor);
+  
+  public static Encoder
+    leftDriveEncoder = new Encoder(Constants.kLeftDriveEncoderChannelA, Constants.kLeftDriveEncoderChannelB),
+    rightDriveEncoder = new Encoder(Constants.kRightDriveEncoderChannelB, Constants.kRightDriveEncoderChannelB);
   
   public static AHRS
     gyro = new AHRS(Port.kMXP);

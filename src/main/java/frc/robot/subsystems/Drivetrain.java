@@ -18,10 +18,19 @@ public class Drivetrain extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  public static SpeedControllerGroup
+  public SpeedControllerGroup
     leftMotors = new SpeedControllerGroup(RobotMap.frontLeftVictor, RobotMap.backLeftVictor),
     rightMotors = new SpeedControllerGroup(RobotMap.frontRightVictor, RobotMap.backRightVictor);
 
+  public void drive(double l, double r) {
+    leftMotors.set(l);
+    rightMotors.set(r);
+  }
+  public void stop() {
+    leftMotors.stopMotor();
+    rightMotors.stopMotor();
+  }
+  
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.

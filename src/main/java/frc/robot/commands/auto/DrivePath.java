@@ -9,9 +9,7 @@ package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.RobotConstants;
-import frc.robot.RobotMap;
-import jaci.pathfinder.Pathfinder;
+import frc.robot.Constants;
 import jaci.pathfinder.Trajectory;
 import frc.robot.util.control.*;
 
@@ -25,7 +23,7 @@ public class DrivePath extends Command {
 
   public DrivePath(Trajectory trajectory) {
     this.trajectory = trajectory;
-    requires(Robot.drivetrain);
+    requires(Robot.drive);
   }
 
   // Called just before this Command runs the first time
@@ -43,9 +41,9 @@ public class DrivePath extends Command {
     double v = ramseteFollower.calculateLinearVelocity();
     double w = ramseteFollower.calculateAngularVelocity();
     // Set linear and angular velocities to drivetrain
-    double l = (-1 * (w * RobotConstants.kWheelBase) + (2 * v)) / 2;
-    double r = ((w * RobotConstants.kWheelBase) + (2 * v)) / 2;
-    Robot.drivetrain.drive(l, r);
+    double l = (-1 * (w * Constants.kWheelBase) + (2 * v)) / 2;
+    double r = ((w * Constants.kWheelBase) + (2 * v)) / 2;
+    Robot.drive.drive(l, r);
     ramseteFollower.updateGoal();
   }
 
@@ -58,7 +56,7 @@ public class DrivePath extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.drivetrain.stop();
+    Robot.drive.stop();
   }
 
   // Called when another command which requires one or more of the same

@@ -7,31 +7,27 @@
 
 package frc.robot.util.control;
 
+import frc.robot.Constants;
 import jaci.pathfinder.Trajectory;
 
 /**
  * Add your docs here.
  */
-public class RamseteFollower {
-    private static final double
-        b = 0,
-        z = 0,
-        wheelBase = 0;
-    
+public class RamseteFollower {    
     private double
         x_d = 0,
         y_d = 0,
         theta_d = 0,
         v_d = 0,
-        w_d = 0;
+        w_d = 0,
+        k;
 
     private int currentSegment;
     private Trajectory traj;
-    public Odometry o;
+    public Odometry o = new Odometry(0, 0, 0);
 
-    public RamseteFollower(Trajectory traj, Odometry o) {
+    public RamseteFollower(Trajectory traj) {
         this.traj = traj;
-        this.o = o;
         currentSegment = 0;
     }
     
@@ -56,11 +52,13 @@ public class RamseteFollower {
             double currentTheta = traj.get(currentSegment).heading;
             double nextTheta = traj.get(currentSegment + 1).heading;
             return (nextTheta - currentTheta) / traj.get(currentSegment).dt;
-        } else return 0;
+        } else {
+            return 0;
+        }
     }
     
     public double calculateConstant() {
-        return 2 * z * Math.sqrt(Math.pow(w_d, 2) + b * Math.pow(v_d, 2));
+        return 2 * Constants.kZ * Math.sqrt(Math.pow(w_d, 2) + Constants.kB * Math.pow(v_d, 2));
     }
     
     public void updateGoal() {
@@ -74,17 +72,21 @@ public class RamseteFollower {
     }
     
     public double sinc(double theta) {
-        if(Math.abs(theta) < 0.001) return 1; // Limit to infinite of sin(x)/x
+        if(Math.abs(theta) < 0.001) return 1; // Limit to infinity of sin(x)/x
         else return (Math.sin(theta) / theta);
     }
     
     public double calculateLinearVelocity() {
-        double v = v_d * Math.cos(theta_d - o.getHeading()) + k * (Math.cos(o.getHeading()) * (x_d - o.getX()) + Math.sin(o.getHeading()) * (y_d - o.getY()));
+        double v = v_d * Math.cos(theta_d - o.getHeading()) + k * ((x_d - o.getX()) * Math.cos(o.getHeading()) + (y_d - o.getY()) * Math.sin(o.getHeading()));
         return v;
     }
     
     public double calculateAngularVelocity() {
-        double w = w_d + b * v_d * sinc(theta_d - o.getHeading()) * ((y_d - o.getY()) * cos(o.getHeading()) - (x_d - o.getX()) * sin(o.getHeading())) + k * (theta_d - o.getHeading());
+        double w = w_d + Constants.kB * v_d * sinc(theta_d - o.getHeading()) * ((y_d - o.getY()) * Math.cos(o.getHeading()) - (x_d - o.getX()) * Math.sin(o.getHeading())) + k * (theta_d - o.getHeading());
         return w;
+    }
+
+    public boolean isFinished() {
+        return currentSegment > traj.length();
     }
 }
