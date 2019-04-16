@@ -19,7 +19,7 @@ public class DrivePath extends Command {
    */
   private Trajectory trajectory;
 
-  private RamseteFollower ramseteFollower;
+  private NonlinearSteeringFollower nonlinearSteeringFollower;
 
   public DrivePath(Trajectory trajectory) {
     this.trajectory = trajectory;
@@ -29,14 +29,14 @@ public class DrivePath extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    ramseteFollower = new RamseteFollower(trajectory);
+    nonlinearSteeringFollower = new NonlinearSteeringFollower(trajectory);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     // Update odometry
-    ramseteFollower.o.updateOdometry();
+    nonlinearSteeringFollower.o.updateOdometry();
     // Calculate linear and angular velocities
     double v = ramseteFollower.calculateLinearVelocity();
     double w = ramseteFollower.calculateAngularVelocity();
@@ -44,13 +44,13 @@ public class DrivePath extends Command {
     double l = (-1 * (w * Constants.kWheelBase) + (2 * v)) / 2;
     double r = ((w * Constants.kWheelBase) + (2 * v)) / 2;
     Robot.drive.drive(l, r);
-    ramseteFollower.updateGoal();
+    nonlinearSteeringFollower.updateGoal();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return ramseteFollower.isFinished();
+    return nonlinearSteeringFollower.isFinished();
   }
 
   // Called once after isFinished returns true
