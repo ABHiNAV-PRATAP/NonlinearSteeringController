@@ -26,7 +26,7 @@ public class NonlinearSteeringFollower {
     private Trajectory traj;
     public Odometry o = new Odometry(0, 0, 0);
 
-    public RamseteFollower(Trajectory traj) {
+    public NonlinearSteeringFollower(Trajectory traj) {
         this.traj = traj;
         currentSegment = 0;
     }
