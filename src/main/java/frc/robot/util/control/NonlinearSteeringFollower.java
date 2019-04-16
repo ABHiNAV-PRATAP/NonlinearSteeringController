@@ -13,7 +13,7 @@ import jaci.pathfinder.Trajectory;
 /**
  * Add your docs here.
  */
-public class RamseteFollower {    
+public class NonlinearSteeringFollower {    
     private double
         x_d = 0,
         y_d = 0,
