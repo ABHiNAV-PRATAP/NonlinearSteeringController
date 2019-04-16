@@ -38,8 +38,8 @@ public class DrivePath extends Command {
     // Update odometry
     nonlinearSteeringFollower.o.updateOdometry();
     // Calculate linear and angular velocities
-    double v = ramseteFollower.calculateLinearVelocity();
-    double w = ramseteFollower.calculateAngularVelocity();
+    double v = nonlinearSteeringFollower.calculateLinearVelocity();
+    double w = nonlinearSteeringFollower.calculateAngularVelocity();
     // Set linear and angular velocities to drivetrain
     double l = (-1 * (w * Constants.kWheelBase) + (2 * v)) / 2;
     double r = ((w * Constants.kWheelBase) + (2 * v)) / 2;
