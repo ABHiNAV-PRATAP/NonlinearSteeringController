@@ -28,7 +28,7 @@ public class Odometry {
     public void updateOdometry() {
         x += ((RobotMap.leftDriveEncoder.getRate() + RobotMap.rightDriveEncoder.getRate()) / 2) * Constants.kDT * Math.cos(theta);
         y += ((RobotMap.leftDriveEncoder.getRate() + RobotMap.rightDriveEncoder.getRate()) / 2) * Constants.kDT * Math.sin(theta);
-        theta += RobotMap.gyro.getAngle();
+        theta = RobotMap.gyro.getAngle();
     }
 
     public double getX() {
